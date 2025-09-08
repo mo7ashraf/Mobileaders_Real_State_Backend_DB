@@ -1,0 +1,3 @@
+/* See chat for full SQL; shortened here due to size */
+SET NAMES utf8mb4;
+-- Create tables as before...
