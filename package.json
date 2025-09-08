@@ -1,5 +1,5 @@
 {
-  "name": "real-estate-backend-db",
+  "name": "real-estate-backend-mysql",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
@@ -7,8 +7,6 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "prisma:generate": "prisma generate",
-    "prisma:dev": "prisma migrate dev --name init",
-    "prisma:deploy": "prisma migrate deploy",
     "seed": "ts-node prisma/seed.ts",
     "import:mock": "ts-node scripts/import-mock.ts"
   },
@@ -18,8 +16,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "helmet": "^7.1.0",
-    "zod": "^3.23.8"
+    "helmet": "^7.1.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2",

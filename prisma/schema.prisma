@@ -1,5 +1,5 @@
 generator client { provider = "prisma-client-js" }
-datasource db { provider = "postgresql"; url = env("DATABASE_URL") }
+datasource db { provider = "mysql"; url = env("DATABASE_URL") }
 
 model User {
   id           String   @id @default(cuid())
@@ -10,8 +10,9 @@ model User {
   bio          String?  @db.Text
   orgName      String?
   accRole      String?
-  channels     Json?
-  socialLinks  Json?
+  channels     String?  @db.LongText // JSON stringified
+  socialLinks  String?  @db.LongText // JSON stringified
+
   sellerProfile  SellerProfile?
   listings       Listing[]
   favorites      Favorite[]
@@ -24,7 +25,7 @@ model SellerProfile {
   verified     Boolean  @default(false)
   clients      Int      @default(0)
   rating       Float    @default(0)
-  badges       String[] @default([])
+  badges       String   @db.LongText // JSON stringified array
   joinedHijri  String?
   joinedText   String?
   regionText   String?
@@ -44,7 +45,7 @@ model Listing {
   status     String    @default("rent")
   category   String    @default("apartment")
   imageUrl   String?   @db.Text
-  tags       String[]  @default([])
+  tags       String?   @db.LongText // JSON stringified array
   createdAt  DateTime  @default(now())
 }
 
@@ -93,16 +94,16 @@ model Notification {
 model Policy {
   slug      String   @id
   title     String
-  contentMd String   @db.Text
+  contentMd String   @db.LongText
   updatedAt DateTime @updatedAt
 }
 
 model AppSettings {
-  id           Int    @id @default(1)
-  language     String @default("ar")
-  theme        String @default("system")
-  notifications Json?
-  privacy      Json?
+  id            Int    @id @default(1)
+  language      String @default("ar")
+  theme         String @default("system")
+  notifications String? @db.LongText  // JSON
+  privacy       String? @db.LongText  // JSON
 }
 
 model SupportSettings {

@@ -21,34 +21,44 @@ account.post('/avatar', async (req, res) => {
 });
 account.get('/channels', async (_req, res) => {
   const u = await prisma.user.findFirst();
-  res.json(u?.channels || { chatInApp: true, whatsapp: false, call: false });
+  res.json(u?.channels ? JSON.parse(u.channels) : { chatInApp: true, whatsapp: false, call: false });
 });
 account.patch('/channels', async (req, res) => {
   const u0 = await prisma.user.findFirst();
   const id = u0?.id || (await prisma.user.create({ data: { phone: '966500000000+', name: 'مستخدم' } })).id;
-  const channels = req.body || {};
+  const channels = JSON.stringify(req.body || {});
   await prisma.user.update({ where: { id }, data: { channels } });
-  res.json({ ok: true, channels });
+  res.json({ ok: true, channels: JSON.parse(channels) });
 });
 account.get('/links', async (_req, res) => {
   const u = await prisma.user.findFirst();
-  res.json(u?.socialLinks || { twitter: '', snapchat: '', tiktok: '', facebook: '', website: '' });
+  res.json(u?.socialLinks ? JSON.parse(u.socialLinks) : { twitter: '', snapchat: '', tiktok: '', facebook: '', website: '' });
 });
 account.patch('/links', async (req, res) => {
   const u0 = await prisma.user.findFirst();
   const id = u0?.id || (await prisma.user.create({ data: { phone: '966500000000+', name: 'مستخدم' } })).id;
-  const socialLinks = req.body || {};
+  const socialLinks = JSON.stringify(req.body || {});
   await prisma.user.update({ where: { id }, data: { socialLinks } });
-  res.json({ ok: true, links: socialLinks });
+  res.json({ ok: true, links: JSON.parse(socialLinks) });
 });
 app.get('/settings', async (_req, res) => {
   const s = await prisma.appSettings.findUnique({ where: { id: 1 } });
-  res.json(s || { language: 'ar', theme: 'system', notifications: { all: true, messages: true, orders: true, ads: true }, privacy: { analytics: true, personalAds: false } });
+  if (!s) return res.json({ language: 'ar', theme: 'system', notifications: { all: true, messages: true, orders: true, ads: true }, privacy: { analytics: true, personalAds: false } });
+  res.json({
+    language: s.language, theme: s.theme,
+    notifications: s.notifications ? JSON.parse(s.notifications) : { all:true,messages:true,orders:true,ads:true },
+    privacy: s.privacy ? JSON.parse(s.privacy) : { analytics:true, personalAds:false }
+  });
 });
 app.patch('/settings', async (req, res) => {
   const cur = await prisma.appSettings.upsert({ where: { id: 1 }, update: {}, create: { id: 1 } });
-  const next = { ...cur, ...(req.body || {}) };
-  await prisma.appSettings.update({ where: { id: 1 }, data: { language: next.language, theme: next.theme, notifications: next.notifications as any, privacy: next.privacy as any } });
+  const next = req.body || {};
+  await prisma.appSettings.update({ where: { id: 1 }, data: {
+    language: next.language ?? cur.language,
+    theme: next.theme ?? cur.theme,
+    notifications: next.notifications ? JSON.stringify(next.notifications) : cur.notifications,
+    privacy: next.privacy ? JSON.stringify(next.privacy) : cur.privacy,
+  }});
   res.json({ ok: true });
 });
 export default { account, app };

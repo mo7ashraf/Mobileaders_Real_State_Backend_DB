@@ -1,0 +1,109 @@
+SET NAMES utf8mb4;
+CREATE TABLE IF NOT EXISTS User (
+  id        VARCHAR(191) PRIMARY KEY,
+  phone     VARCHAR(191) UNIQUE NOT NULL,
+  name      VARCHAR(255) NOT NULL,
+  avatarUrl TEXT,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  bio       LONGTEXT,
+  orgName   VARCHAR(255),
+  accRole   VARCHAR(191),
+  channels  LONGTEXT,
+  socialLinks LONGTEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS SellerProfile (
+  id        VARCHAR(191) PRIMARY KEY,
+  userId    VARCHAR(191) UNIQUE NOT NULL,
+  verified  TINYINT(1) DEFAULT 0,
+  clients   INT DEFAULT 0,
+  rating    DOUBLE DEFAULT 0,
+  badges    LONGTEXT,
+  joinedHijri VARCHAR(64),
+  joinedText  VARCHAR(128),
+  regionText  VARCHAR(255),
+  CONSTRAINT fk_sp_user FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS Listing (
+  id        VARCHAR(191) PRIMARY KEY,
+  sellerId  VARCHAR(191) NOT NULL,
+  title     VARCHAR(255) NOT NULL,
+  address   VARCHAR(255) NOT NULL,
+  city      VARCHAR(191) NOT NULL,
+  price     INT NOT NULL,
+  bedrooms  INT DEFAULT 0,
+  bathrooms INT DEFAULT 0,
+  areaSqm   INT DEFAULT 0,
+  status    VARCHAR(32) DEFAULT 'rent',
+  category  VARCHAR(32) DEFAULT 'apartment',
+  imageUrl  TEXT,
+  tags      LONGTEXT,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_listing_seller (sellerId),
+  CONSTRAINT fk_listing_user FOREIGN KEY (sellerId) REFERENCES User(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS Favorite (
+  userId    VARCHAR(191) NOT NULL,
+  listingId VARCHAR(191) NOT NULL,
+  PRIMARY KEY (userId, listingId),
+  CONSTRAINT fk_fav_user FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE,
+  CONSTRAINT fk_fav_listing FOREIGN KEY (listingId) REFERENCES Listing(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `Order` (
+  id        VARCHAR(191) PRIMARY KEY,
+  userId    VARCHAR(191) NOT NULL,
+  status    VARCHAR(32) DEFAULT 'open',
+  notes     TEXT,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_order_user FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS PropertyRequest (
+  id        VARCHAR(191) PRIMARY KEY,
+  userId    VARCHAR(191) NOT NULL,
+  type      VARCHAR(64) NOT NULL,
+  city      VARCHAR(128) NOT NULL,
+  budgetMin INT DEFAULT 0,
+  budgetMax INT DEFAULT 0,
+  bedrooms  INT DEFAULT 0,
+  bathrooms INT DEFAULT 0,
+  notes     TEXT,
+  status    VARCHAR(32) DEFAULT 'open',
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_req_user FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS Notification (
+  id        VARCHAR(191) PRIMARY KEY,
+  userId    VARCHAR(191),
+  title     VARCHAR(255) NOT NULL,
+  subtitle  VARCHAR(255),
+  starred   TINYINT(1) DEFAULT 0,
+  readAt    DATETIME NULL,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_notif_user FOREIGN KEY (userId) REFERENCES User(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS Policy (
+  slug      VARCHAR(191) PRIMARY KEY,
+  title     VARCHAR(255) NOT NULL,
+  contentMd LONGTEXT NOT NULL,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS AppSettings (
+  id            INT PRIMARY KEY,
+  language      VARCHAR(16) DEFAULT 'ar',
+  theme         VARCHAR(16) DEFAULT 'system',
+  notifications LONGTEXT,
+  privacy       LONGTEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS SupportSettings (
+  id        INT PRIMARY KEY,
+  whatsapp  VARCHAR(32) DEFAULT '966500000000',
+  email     VARCHAR(191) DEFAULT 'support@example.com'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
