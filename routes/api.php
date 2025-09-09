@@ -17,7 +17,10 @@ use App\Http\Controllers\RequestController;
 Route::get('/', [PingController::class, 'ok']);
 
 Route::get('/listings', [ListingController::class, 'index']);
+Route::get('/listings/trending', [ListingController::class, 'index']); // same handler
 
+
+Route::get('/sellers', [SellerController::class, 'list']); // new
 Route::get('/sellers/{id}', [SellerController::class, 'header']);
 Route::get('/sellers/{id}/listings', [SellerController::class, 'listings']);
 

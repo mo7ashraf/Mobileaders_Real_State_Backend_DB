@@ -1,8 +1,27 @@
 <?php
+
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Model;
-class Listing extends Model {
-  public $incrementing=false; protected $keyType='string'; protected $table='Listing';
-  protected $fillable=['id','seller_id','title','address','city','price','bedrooms','bathrooms','area_sqm','status','category','image_url','tags'];
-  public function seller(){ return $this->belongsTo(User::class,'seller_id'); }
+
+class Listing extends Model
+{
+    public $incrementing = false;
+    public $timestamps   = false;           // table uses createdAt only
+    protected $keyType   = 'string';
+    protected $table     = 'Listing';
+    protected $primaryKey = 'id';
+
+    // match your camelCase columns
+    protected $fillable = [
+        'id','sellerId','title','address','city','price',
+        'bedrooms','bathrooms','areaSqm','status','category',
+        'imageUrl','tags','createdAt',
+    ];
+
+    public function seller()
+    {
+        // FK = sellerId, owner key = id
+        return $this->belongsTo(User::class, 'sellerId', 'id');
+    }
 }

@@ -27,6 +27,7 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
+    'cors_origin' => env('CORS_ALLOWED_ORIGINS', '*'),
 
     /*
     |--------------------------------------------------------------------------

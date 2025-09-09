@@ -2,6 +2,9 @@
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 class PropertyRequest extends Model {
-  public $incrementing=false; protected $keyType='string'; protected $table='PropertyRequest';
-  protected $fillable=['id','user_id','type','city','budget_min','budget_max','bedrooms','bathrooms','notes','status'];
+  public $incrementing = false;
+  public $timestamps   = false;
+  protected $keyType   = 'string';
+  protected $table     = 'PropertyRequest';
+  protected $fillable  = ['id','userId','type','city','budgetMin','budgetMax','bedrooms','bathrooms','notes','status','createdAt'];
 }
