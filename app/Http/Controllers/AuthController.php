@@ -16,7 +16,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:User,email',
             'password' => 'required|string|min:8',
-            'phone' => 'nullable|string|max:32',
+            'phone' => 'nullable|string|max:32|unique:User,phone',
         ])->validate();
 
         $user = new User();
@@ -80,4 +80,3 @@ class AuthController extends Controller
         ];
     }
 }
-
