@@ -28,7 +28,8 @@ class ProfileWebController extends Controller
         $u->fill($data);
         $u->save();
 
-        return back()->with('success', 'تم تحديث الملف بنجاح');
+        return back()->with('success', '?? ????? ????? ?????');
     }
 }
+
 

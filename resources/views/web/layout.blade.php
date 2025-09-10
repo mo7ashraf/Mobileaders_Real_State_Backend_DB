@@ -45,7 +45,7 @@
             <button class="hover:text-primary">خروج</button>
           </form>
         @else
-          <a class="hover:text-primary" href="{{ route('web.login') }}">تسجيل الدخول</a>
+          <a class="hover:text-primary" href="{{ route('login') }}">تسجيل الدخول</a>
           <a class="hover:text-primary" href="{{ route('web.register') }}">إنشاء حساب</a>
         @endauth
       </nav>
@@ -53,6 +53,12 @@
   </header>
 
   <main class="max-w-7xl mx-auto px-4 py-6">
+    @if (session('success'))
+      <div class="mb-4 bg-green-50 text-green-700 px-4 py-3 rounded">{{ session('success') }}</div>
+    @endif
+    @if (session('error'))
+      <div class="mb-4 bg-red-50 text-red-700 px-4 py-3 rounded">{{ session('error') }}</div>
+    @endif
     @yield('content')
   </main>
 

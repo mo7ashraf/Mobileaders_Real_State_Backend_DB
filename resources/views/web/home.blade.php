@@ -22,7 +22,7 @@
 
   <div class="flex items-center justify-between mb-3">
     <h2 class="font-bold">عقاريين قريبين منك</h2>
-    <a href="{{ route('web.search') }}" class="text-primary">مشاهدة الكل</a>
+    <a href="{{ route('web.sellers.index') }}" class="text-primary">مشاهدة الكل</a>
   </div>
   <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
     @foreach($sellers as $s)
@@ -73,4 +73,3 @@
     @endforeach
   </div>
 @endsection
-

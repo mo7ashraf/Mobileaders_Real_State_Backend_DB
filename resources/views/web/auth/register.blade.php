@@ -34,8 +34,7 @@
       <button class="w-full px-4 py-2 bg-primary text-white rounded-xl">تسجيل</button>
     </form>
     <div class="mt-4 text-center text-sm">
-      لديك حساب؟ <a href="{{ route('web.login') }}" class="text-primary">تسجيل الدخول</a>
+      لديك حساب؟ <a href="{{ route('login') }}" class="text-primary">تسجيل الدخول</a>
     </div>
   </div>
 @endsection
-

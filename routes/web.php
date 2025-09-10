@@ -13,6 +13,7 @@ use App\Http\Controllers\Web\AdsWebController;
 Route::get('/',                 [HomeController::class, 'index'])->name('web.home');
 Route::get('/search',           [SearchWebController::class, 'index'])->name('web.search');
 Route::get('/listings/{id}',    [ListingWebController::class, 'show'])->name('web.listing.show');
+Route::get('/sellers',          [SellerWebController::class, 'index'])->name('web.sellers.index');
 Route::get('/sellers/{id}',     [SellerWebController::class, 'show'])->name('web.seller.show');
 
 Route::get('/policies',         [PageWebController::class, 'policiesIndex'])->name('web.policies.index');
@@ -25,7 +26,7 @@ Route::get('/ping', fn() => view('web.ping'));
 
 // Auth (web session)
 Route::middleware('guest')->group(function () {
-    Route::get('/login',    [AuthWebController::class, 'showLogin'])->name('web.login');
+    Route::get('/login',    [AuthWebController::class, 'showLogin'])->name('login');
     Route::post('/login',   [AuthWebController::class, 'login'])->name('web.login.post');
     Route::get('/register', [AuthWebController::class, 'showRegister'])->name('web.register');
     Route::post('/register',[AuthWebController::class, 'register'])->name('web.register.post');

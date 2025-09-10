@@ -31,7 +31,8 @@ class AuthWebController extends Controller
 
         Auth::login($user, false);
         $request->session()->regenerate();
-        return redirect()->intended(route('web.home'));
+        return redirect()->intended('/')
+            ->with('success', 'تم تسجيل الدخول بنجاح');
     }
 
     public function showRegister()
@@ -59,7 +60,8 @@ class AuthWebController extends Controller
 
         Auth::login($user, false);
         $request->session()->regenerate();
-        return redirect()->route('web.home');
+        return redirect()->to('/')
+            ->with('success', 'تم إنشاء الحساب وتسجيل الدخول');
     }
 
     public function logout(Request $request)
@@ -67,6 +69,6 @@ class AuthWebController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('web.home');
+        return redirect()->to('/')->with('success', 'تم تسجيل الخروج');
     }
 }
