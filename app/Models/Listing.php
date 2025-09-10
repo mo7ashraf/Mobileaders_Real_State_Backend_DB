@@ -19,6 +19,10 @@ class Listing extends Model
         'imageUrl','tags','createdAt',
     ];
 
+    protected $casts = [
+        'createdAt' => 'datetime',
+    ];
+
     public function seller()
     {
         // FK = sellerId, owner key = id

@@ -13,6 +13,8 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RequestController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OtpController;
 
 Route::get('/', [PingController::class, 'ok']);
 
@@ -52,3 +54,17 @@ Route::get('/orders/{id}', [OrderController::class, 'show']);
 Route::post('/orders', [OrderController::class, 'create']);
 
 Route::post('/requests', [RequestController::class, 'create']);
+
+// Auth (email/password + OTP)
+Route::prefix('auth')->group(function () {
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+
+    Route::post('/otp/request', [OtpController::class, 'requestCode']);
+    Route::post('/otp/verify', [OtpController::class, 'verifyCode']);
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/me', [AuthController::class, 'me']);
+        Route::post('/logout', [AuthController::class, 'logout']);
+    });
+});

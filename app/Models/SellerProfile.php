@@ -17,6 +17,10 @@ class SellerProfile extends Model
         'joinedHijri','joinedText','regionText'
     ];
 
+    protected $casts = [
+        'verified' => 'boolean',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'userId', 'id');

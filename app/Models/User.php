@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Model
+class User extends Authenticatable
 {
+    use HasApiTokens, Notifiable;
     public $incrementing = false;
     public $timestamps   = false;         // table uses createdAt only
     protected $keyType   = 'string';
@@ -15,6 +18,10 @@ class User extends Model
     protected $fillable = [
         'id','phone','name','avatarUrl','createdAt',
         'bio','orgName','accRole','channels','socialLinks'
+    ];
+
+    protected $casts = [
+        'createdAt' => 'datetime',
     ];
 
     public function sellerProfile()

@@ -7,4 +7,8 @@ class PropertyRequest extends Model {
   protected $keyType   = 'string';
   protected $table     = 'PropertyRequest';
   protected $fillable  = ['id','userId','type','city','budgetMin','budgetMax','bedrooms','bathrooms','notes','status','createdAt'];
+
+  protected $casts = [
+    'createdAt' => 'datetime',
+  ];
 }

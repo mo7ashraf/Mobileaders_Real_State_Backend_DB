@@ -7,4 +7,8 @@ class Order extends Model {
   protected $keyType   = 'string';
   protected $table     = 'Order';
   protected $fillable  = ['id','userId','status','notes','createdAt'];
+
+  protected $casts = [
+    'createdAt' => 'datetime',
+  ];
 }

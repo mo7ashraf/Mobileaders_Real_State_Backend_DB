@@ -7,4 +7,10 @@ class Notification extends Model {
   protected $keyType   = 'string';
   protected $table     = 'Notification';
   protected $fillable  = ['id','userId','title','subtitle','starred','readAt','createdAt'];
+
+  protected $casts = [
+    'createdAt' => 'datetime',
+    'readAt' => 'datetime',
+    'starred' => 'boolean',
+  ];
 }
