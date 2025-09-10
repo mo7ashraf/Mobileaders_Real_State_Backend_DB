@@ -4,7 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use App\Providers\AppServiceProvider;
 use App\Http\Middleware\Cors;
-use App\Http\Middleware;
+use Illuminate\Foundation\Configuration\Middleware; 
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -15,8 +15,8 @@ return Application::configure(basePath: dirname(__DIR__))
         AppServiceProvider::class,
     ])
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->append(Cors::class);  
-    })
+    $middleware->append(Cors::class);
+})
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
