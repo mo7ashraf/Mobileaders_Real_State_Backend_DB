@@ -19,7 +19,7 @@ class ProfileWebController extends Controller
         $u = $request->user();
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'phone' => ['nullable','string','max:32', \Illuminate\Validation\Rule::unique('User','phone')->ignore($u->id, 'id')],
+            'phone' => ['nullable','string','max:32', \Illuminate\Validation\Rule::unique('user','phone')->ignore($u->id, 'id')],
             'avatarUrl' => 'nullable|url|max:1024',
             'bio' => 'nullable|string|max:1000',
             'orgName' => 'nullable|string|max:255',

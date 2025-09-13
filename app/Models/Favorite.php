@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 class Favorite extends Model
 {
   public $timestamps = false;
-  protected $table = 'Favorite';
+  protected $table = 'favorite';
   protected $fillable = ['userId','listingId'];
 
   public $incrementing = false;

@@ -5,7 +5,7 @@ class Order extends Model {
   public $incrementing = false;
   public $timestamps   = false;
   protected $keyType   = 'string';
-  protected $table     = 'Order';
+  protected $table     = 'order';
   protected $fillable  = ['id','userId','status','notes','createdAt'];
 
   protected $casts = [

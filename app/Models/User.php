@@ -12,7 +12,7 @@ class User extends Authenticatable
     public $incrementing = false;
     public $timestamps   = false;         // table uses createdAt only
     protected $keyType   = 'string';
-    protected $table     = 'User';
+    protected $table     = 'user';
     protected $primaryKey = 'id';
 
     protected $fillable = [

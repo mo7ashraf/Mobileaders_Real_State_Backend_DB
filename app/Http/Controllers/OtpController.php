@@ -18,7 +18,7 @@ class OtpController extends Controller
         ])->validate();
 
         $code = (string) random_int(100000, 999999);
-        DB::table('UserOtp')->insert([
+        DB::table('userotp')->insert([
             'phone' => $data['phone'],
             'code' => $code,
             'expiresAt' => now()->addMinutes(5),
@@ -41,7 +41,7 @@ class OtpController extends Controller
             'code' => 'required|string|max:10',
         ])->validate();
 
-        $row = DB::table('UserOtp')
+        $row = DB::table('userotp')
             ->where('phone', $data['phone'])
             ->where('code', $data['code'])
             ->whereNull('consumedAt')
@@ -53,7 +53,7 @@ class OtpController extends Controller
             return response()->json(['message' => 'Invalid or expired code'], 422);
         }
 
-        DB::table('UserOtp')->where('id', $row->id)->update(['consumedAt' => now()]);
+        DB::table('userotp')->where('id', $row->id)->update(['consumedAt' => now()]);
 
         $user = User::where('phone', $data['phone'])->first();
         if (! $user) {
@@ -78,4 +78,3 @@ class OtpController extends Controller
         ]);
     }
 }
-

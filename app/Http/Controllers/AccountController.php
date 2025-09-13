@@ -4,35 +4,63 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\SellerProfile;
 use Illuminate\Support\Str;
 
 class AccountController extends Controller
 {
+    private function ensureSellerProfile(User $u): void
+    {
+        if (!$u->sellerProfile) {
+            $sp = new SellerProfile();
+            $sp->id = (string) Str::uuid();
+            $sp->userId = $u->id;
+            $sp->verified = false;
+            $sp->clients = 0;
+            $sp->rating = 0;
+            $sp->badges = json_encode([]);
+            $sp->joinedHijri = null;
+            $sp->joinedText = null;
+            $sp->regionText = null;
+            $sp->save();
+        }
+    }
+
     private function firstUser(): User
     {
         $u = User::orderBy('createdAt','asc')->first();
-        if ($u) return $u;
+        if ($u) {
+            $this->ensureSellerProfile($u);
+            return $u;
+        }
 
         $u = new User();
         $u->id        = (string) Str::uuid();
         $u->phone     = '966500000000+';
-        $u->name      = 'مستخدم';
+        $u->name      = '�.���������.';
         $u->createdAt = now();
         $u->save();
+        $this->ensureSellerProfile($u);
         return $u;
     }
 
 public function getProfile()
 {
-    $u = User::orderBy('createdAt','asc')->first();
+    // Ensure there is at least one user record
+    $u = $this->firstUser();
+    $sp = $u->sellerProfile; // ensured above
     return response()->json([
-        'id'        => $u->id ?? null,        // ✅ أضف هذا
+        'id'        => $u->id,
         'name'      => $u->name ?? '',
         'bio'       => $u->bio ?? '',
         'orgName'   => $u->orgName ?? '',
-        'role'      => $u->accRole ?? 'وسيط عقاري',
+        'role'      => $u->accRole ?? 'user',
         'avatarUrl' => $u->avatarUrl ?? '',
         'phone'     => $u->phone ?? '',
+        // extra fields commonly used by the app UI
+        'verified'  => (bool) optional($sp)->verified,
+        'rating'    => (float) (optional($sp)->rating ?? 0),
+        'clients'   => (int) (optional($sp)->clients ?? 0),
     ]);
 }
 

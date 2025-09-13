@@ -9,7 +9,7 @@ class SellerProfile extends Model
     public $incrementing = false;
     public $timestamps   = false;
     protected $keyType   = 'string';
-    protected $table     = 'SellerProfile';
+    protected $table     = 'sellerprofile';
     protected $primaryKey = 'id';
 
     protected $fillable = [
