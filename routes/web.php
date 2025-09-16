@@ -9,6 +9,8 @@ use App\Http\Controllers\Web\PageWebController;
 use App\Http\Controllers\Web\AuthWebController;
 use App\Http\Controllers\Web\ProfileWebController;
 use App\Http\Controllers\Web\AdsWebController;
+use App\Http\Controllers\PolicyImportController;
+
 
 Route::get('/',                 [HomeController::class, 'index'])->name('web.home');
 Route::get('/search',           [SearchWebController::class, 'index'])->name('web.search');
@@ -18,6 +20,9 @@ Route::get('/sellers/{id}',     [SellerWebController::class, 'show'])->name('web
 
 Route::get('/policies',         [PageWebController::class, 'policiesIndex'])->name('web.policies.index');
 Route::get('/policies/{slug}',  [PageWebController::class, 'policy'])->name('web.policies.show');
+
+Route::get('/__import-policies', [PolicyImportController::class,'importFromFiles']); // visit once, then remove
+
 
 Route::get('/support',          [PageWebController::class, 'support'])->name('web.support');
 

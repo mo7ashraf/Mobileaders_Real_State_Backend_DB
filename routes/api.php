@@ -15,6 +15,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OtpController;
+use App\Http\Controllers\ConversationsController;
 
 Route::get('/', [PingController::class, 'ok']);
 
@@ -40,6 +41,11 @@ Route::get('/support/settings', [SupportController::class, 'get']);
 Route::match(['post','patch'],'/support/settings', [SupportController::class, 'set']);
 
 Route::get('/policies/{slug}', [PolicyController::class, 'get']);
+
+Route::get('/conversations', [ConversationsController::class, 'index']);
+Route::post('/conversations',                [ConversationsController::class,'store']);
+Route::get('/conversations/{id}/messages',   [ConversationsController::class,'messages']);
+Route::post('/conversations/{id}/messages',  [ConversationsController::class,'send']);
 
 Route::get('/notifications', [NotificationController::class, 'index']);
 Route::post('/notifications/{id}/star', [NotificationController::class, 'star']);
