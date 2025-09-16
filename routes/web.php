@@ -10,7 +10,7 @@ use App\Http\Controllers\Web\AuthWebController;
 use App\Http\Controllers\Web\ProfileWebController;
 use App\Http\Controllers\Web\AdsWebController;
 use App\Http\Controllers\PolicyImportController;
-
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/',                 [HomeController::class, 'index'])->name('web.home');
 Route::get('/search',           [SearchWebController::class, 'index'])->name('web.search');
@@ -47,4 +47,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/ads',           [AdsWebController::class, 'store'])->name('web.ads.store');
     Route::get('/account/listings',[AdsWebController::class, 'mine'])->name('web.ads.mine');
     Route::post('/ads/{id}/delete',[AdsWebController::class, 'destroy'])->name('web.ads.delete');
+});
+// temporary “flush” route to clear cached routes/config/views if needed
+Route::get('/__flush', function () {
+    Artisan::call('config:clear');
+    Artisan::call('route:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('view:clear');
+    return 'flushed';
 });
