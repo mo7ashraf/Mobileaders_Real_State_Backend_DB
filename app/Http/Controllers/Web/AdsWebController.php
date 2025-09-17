@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Support\GeoSaudi;
 
 class AdsWebController extends Controller
 {
@@ -20,6 +21,8 @@ class AdsWebController extends Controller
             'title' => 'required|string|max:255',
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:100',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
             'price' => 'required|integer|min:0',
             'bedrooms' => 'nullable|integer|min:0|max:20',
             'bathrooms' => 'nullable|integer|min:0|max:20',
@@ -33,6 +36,15 @@ class AdsWebController extends Controller
         $listing->id = (string) Str::uuid();
         $listing->sellerId = $request->user()->id;
         $listing->fill($data);
+
+        // Ensure coordinates are present and within Saudi Arabia, choose within the selected city when possible
+        $lat = $listing->latitude !== null ? (float) $listing->latitude : null;
+        $lng = $listing->longitude !== null ? (float) $listing->longitude : null;
+        if (!GeoSaudi::inSaudi($lat, $lng)) {
+            [$gLat, $gLng] = GeoSaudi::guessForCity($listing->city);
+            $listing->latitude = $gLat;
+            $listing->longitude = $gLng;
+        }
         $listing->createdAt = now();
         $listing->save();
 
@@ -55,4 +67,3 @@ class AdsWebController extends Controller
         return back()->with('success', 'تم حذف الإعلان');
     }
 }
-

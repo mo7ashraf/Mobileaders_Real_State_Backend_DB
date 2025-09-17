@@ -16,6 +16,8 @@ use App\Http\Controllers\RequestController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\ConversationsController;
+use Illuminate\Support\Facades\DB;
+
 
 Route::get('/', [PingController::class, 'ok']);
 
@@ -41,6 +43,7 @@ Route::get('/support/settings', [SupportController::class, 'get']);
 Route::match(['post','patch'],'/support/settings', [SupportController::class, 'set']);
 
 Route::get('/policies/{slug}', [PolicyController::class, 'get']);
+
 
 Route::get('/conversations', [ConversationsController::class, 'index']);
 Route::post('/conversations',                [ConversationsController::class,'store']);

@@ -57,6 +57,8 @@ class ListingController extends Controller
                 'sellerId'  => $l->sellerId,
                 'title'     => $l->title,
                 'address'   => $l->address,
+                'latitude'  => $l->latitude !== null ? (float)$l->latitude : null,
+                'longitude' => $l->longitude !== null ? (float)$l->longitude : null,
                 'city'      => $l->city,
                 'price'     => (int)$l->price,
                 'bedrooms'  => (int)$l->bedrooms,

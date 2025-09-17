@@ -15,7 +15,7 @@ class Listing extends Model
     // match your camelCase columns
     protected $fillable = [
         'id','sellerId','title','address','city','price',
-        'bedrooms','bathrooms','areaSqm','status','category',
+        'latitude','longitude','bedrooms','bathrooms','areaSqm','status','category',
         'imageUrl','tags','createdAt',
     ];
 

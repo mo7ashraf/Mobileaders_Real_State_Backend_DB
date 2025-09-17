@@ -46,6 +46,8 @@ class SellerController extends Controller
         foreach ($rows as $r) {
             $out[] = [
                 'id'=>$r->id,'sellerId'=>$r->sellerId,'title'=>$r->title,'address'=>$r->address,'city'=>$r->city,
+                'latitude'=> $r->latitude !== null ? (float)$r->latitude : null,
+                'longitude'=> $r->longitude !== null ? (float)$r->longitude : null,
                 'price'=>(int)$r->price,'bedrooms'=>(int)$r->bedrooms,'bathrooms'=>(int)$r->bathrooms,'areaSqm'=>(int)$r->areaSqm,
                 'status'=>$r->status ?: (($r->price>700000)?'sell':'rent'),
                 'category'=>$r->category ?: 'apartment',

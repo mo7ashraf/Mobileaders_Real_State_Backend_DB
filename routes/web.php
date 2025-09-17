@@ -22,6 +22,7 @@ Route::get('/policies',         [PageWebController::class, 'policiesIndex'])->na
 Route::get('/policies/{slug}',  [PageWebController::class, 'policy'])->name('web.policies.show');
 
 Route::get('/__import-policies', [PolicyImportController::class,'importFromFiles']); // visit once, then remove
+Route::get('/tools/import-policies', [PolicyImportController::class, 'run'])->name('tools.import-policies');
 
 
 Route::get('/support',          [PageWebController::class, 'support'])->name('web.support');

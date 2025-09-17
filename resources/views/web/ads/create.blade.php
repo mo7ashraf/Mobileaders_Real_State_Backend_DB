@@ -14,6 +14,14 @@
         <input type="text" name="title" value="{{ old('title') }}" class="w-full border rounded-xl px-3 py-2" required>
       </div>
       <div>
+        <label class="block mb-1">Latitude</label>
+        <input type="number" name="latitude" step="any" value="{{ old('latitude') }}" class="w-full border rounded-xl px-3 py-2" placeholder="e.g. 24.7136">
+      </div>
+      <div>
+        <label class="block mb-1">Longitude</label>
+        <input type="number" name="longitude" step="any" value="{{ old('longitude') }}" class="w-full border rounded-xl px-3 py-2" placeholder="e.g. 46.6753">
+      </div>
+      <div>
         <label class="block mb-1">المدينة</label>
         <input type="text" name="city" value="{{ old('city') }}" class="w-full border rounded-xl px-3 py-2">
       </div>
@@ -63,4 +71,3 @@
     </form>
   </div>
 @endsection
-

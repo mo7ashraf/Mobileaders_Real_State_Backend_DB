@@ -23,6 +23,26 @@
     </div>
   </div>
 
+  @if(!is_null($item->latitude) && !is_null($item->longitude))
+    <div class="bg-white rounded-2xl overflow-hidden shadow mb-6">
+      <div class="p-4">
+        <h2 class="font-bold mb-3">الموقع على الخريطة</h2>
+        <div class="w-full" style="aspect-ratio: 16 / 9;">
+          <iframe
+            width="100%"
+            height="100%"
+            style="border:0; width:100%; height:100%;"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://maps.google.com/maps?q={{ $item->latitude }},{{ $item->longitude }}&z=14&output=embed">
+          </iframe>
+        </div>
+        <div class="mt-2 text-sm text-gray700">Lat: {{ (float)$item->latitude }}, Lng: {{ (float)$item->longitude }}</div>
+      </div>
+    </div>
+  @endif
+
   @if($seller)
     <div class="bg-white rounded-2xl shadow p-4 mb-6">
       <div class="flex items-center gap-3">
