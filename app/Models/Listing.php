@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Category;
 
 class Listing extends Model
 {
     public $incrementing = false;
     public $timestamps   = false;           // table uses createdAt only
     protected $keyType   = 'string';
-    protected $table     = 'Listing';
+    protected $table     = 'listing';
     protected $primaryKey = 'id';
 
     // match your camelCase columns
@@ -27,5 +28,11 @@ class Listing extends Model
     {
         // FK = sellerId, owner key = id
         return $this->belongsTo(User::class, 'sellerId', 'id');
+    }
+
+    public function categoryModel()
+    {
+        // FK = category (slug), owner key = slug
+        return $this->belongsTo(Category::class, 'category', 'slug');
     }
 }

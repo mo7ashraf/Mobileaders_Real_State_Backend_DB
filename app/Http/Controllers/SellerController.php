@@ -35,7 +35,7 @@ class SellerController extends Controller
 
     public function listings($id)
     {
-        $rows = Listing::where('sellerId',$id)->orderBy('createdAt','desc')->get();
+        $rows = Listing::where('sellerId',$id)->with('categoryModel:slug,name')->orderBy('createdAt','desc')->get();
         $fallbacks = [
             'https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop',
             'https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=1200&auto=format&fit=crop',
@@ -51,6 +51,7 @@ class SellerController extends Controller
                 'price'=>(int)$r->price,'bedrooms'=>(int)$r->bedrooms,'bathrooms'=>(int)$r->bathrooms,'areaSqm'=>(int)$r->areaSqm,
                 'status'=>$r->status ?: (($r->price>700000)?'sell':'rent'),
                 'category'=>$r->category ?: 'apartment',
+                'categoryName'=> optional($r->categoryModel)->name,
                 'imageUrl'=>$r->imageUrl ?: $fallbacks[$i % count($fallbacks)],
                 'tags'=>$r->tags ? json_decode($r->tags,true): [],
                 'createdAt'=>$r->createdAt,
@@ -61,7 +62,7 @@ class SellerController extends Controller
     }
     public function list()
 {
-    $ids = \DB::table('Listing')
+    $ids = \DB::table('listing')
         ->select('sellerId', \DB::raw('COUNT(*) as cnt'))
         ->groupBy('sellerId')
         ->orderByDesc('cnt')
@@ -73,12 +74,12 @@ class SellerController extends Controller
     $users    = \App\Models\User::whereIn('id', $ids)->get()->keyBy('id');
     $profiles = \App\Models\SellerProfile::whereIn('userId', $ids)->get()->keyBy('userId');
 
-    $lastCities = \DB::table('Listing')
+    $lastCities = \DB::table('listing')
         ->select('sellerId', \DB::raw('MAX(createdAt) as latest'))
         ->whereIn('sellerId', $ids)
         ->groupBy('sellerId');
 
-    $cities = \DB::table('Listing as l')
+    $cities = \DB::table('listing as l')
         ->joinSub($lastCities, 't', function($j){ $j->on('l.sellerId','=','t.sellerId')->on('l.createdAt','=','t.latest'); })
         ->pluck('l.city','l.sellerId');
 

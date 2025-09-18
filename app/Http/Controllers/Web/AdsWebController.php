@@ -28,7 +28,7 @@ class AdsWebController extends Controller
             'bathrooms' => 'nullable|integer|min:0|max:20',
             'areaSqm' => 'nullable|integer|min:0|max:10000',
             'status' => 'required|in:rent,sell',
-            'category' => 'required|in:apartment,villa,office,resthouse',
+            'category' => 'required|exists:Category,slug',
             'imageUrl' => 'nullable|url|max:1024',
         ]);
 

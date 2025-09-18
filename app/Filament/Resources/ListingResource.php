@@ -30,9 +30,7 @@ class ListingResource extends Resource
             ]),
             Forms\Components\Select::make('status')->label('الحالة')
                 ->options(['rent'=>'للإيجار','sell'=>'للبيع'])->required()->default('rent'),
-            Forms\Components\Select::make('category')->label('النوع')->options([
-                'apartment'=>'شقة','villa'=>'فيلا','office'=>'مكتب','resthouse'=>'استراحة'
-            ])->required()->default('apartment'),
+            Forms\Components\Select::make('category')->label('Category')->relationship('categoryModel','name')->searchable()->preload()->required()->default('apartment'),
             Forms\Components\TextInput::make('imageUrl')->label('صورة رئيسية (رابط)'),
             Forms\Components\Textarea::make('tags')->label('وسوم (JSON Array)')
                 ->helperText('مثال: ["مدفوع","غير مفروش"]'),
@@ -49,7 +47,7 @@ class ListingResource extends Resource
                 Tables\Columns\TextColumn::make('city')->label('المدينة')->badge(),
                 Tables\Columns\TextColumn::make('price')->label('السعر')->money('SAR'),
                 Tables\Columns\TextColumn::make('status')->label('الحالة')->badge(),
-                Tables\Columns\TextColumn::make('category')->label('النوع')->badge(),
+                Tables\Columns\TextColumn::make('categoryModel.name')->label('النوع')->badge(),
                 Tables\Columns\TextColumn::make('createdAt')->label('أُنشئ')->since(),
             ])
             ->filters([])

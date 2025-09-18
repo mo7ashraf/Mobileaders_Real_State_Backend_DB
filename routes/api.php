@@ -16,6 +16,7 @@ use App\Http\Controllers\RequestController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\ConversationsController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\DB;
 
 
@@ -23,6 +24,9 @@ Route::get('/', [PingController::class, 'ok']);
 
 Route::get('/listings', [ListingController::class, 'index']);
 Route::get('/listings/trending', [ListingController::class, 'index']); // same handler
+
+// Categories (for apps/web)
+Route::get('/categories', [CategoryController::class, 'index']);
 
 Route::get('/sellers', [SellerController::class, 'list']); // new
 Route::get('/sellers/{id}', [SellerController::class, 'header']);

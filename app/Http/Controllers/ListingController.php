@@ -29,7 +29,7 @@ class ListingController extends Controller
 
     public function index(Request $r)
     {
-        $q = Listing::query()->with(['seller:id,name,avatarUrl']);
+        $q = Listing::query()->with(['seller:id,name,avatarUrl','categoryModel:slug,name,icon']);
 
         if ($s=$r->get('q'))        $q->where(fn($w)=>$w->where('title','like',"%$s%")->orWhere('address','like',"%$s%"));
         if ($s=$r->get('city'))     $q->where('city',$s);
@@ -65,7 +65,9 @@ class ListingController extends Controller
                 'bathrooms' => (int)$l->bathrooms,
                 'areaSqm'   => (int)$l->areaSqm,
                 'status'    => $this->mapStatus($l->status ?: (($l->price>700000)?'sell':'rent')),
-                'category'  => $this->mapCategory($l->category ?: 'apartment'),
+                'category'  => $l->category ?: 'apartment',
+                'categoryName' => optional($l->categoryModel)->name,
+                'categoryIcon' => optional($l->categoryModel)->icon,
                 'imageUrl'  => $l->imageUrl,
                 'tags'      => $l->tags ? json_decode($l->tags,true) : [],
                 'createdAt' => $l->createdAt,

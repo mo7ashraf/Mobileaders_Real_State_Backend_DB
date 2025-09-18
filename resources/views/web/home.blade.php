@@ -21,6 +21,19 @@
   </div>
 
   <div class="flex items-center justify-between mb-3">
+    <h2 class="font-bold">الأقسام</h2>
+  </div>
+  <div class="flex gap-3 overflow-x-auto pb-1 mb-8">
+    @foreach(($categories ?? []) as $c)
+      <a href="{{ route('web.search',['category'=>$c->slug]) }}"
+         class="min-w-[120px] bg-white rounded-xl p-4 shadow text-center hover:shadow-md">
+         <div class="text-2xl">🏷️</div>
+         <div class="mt-2">{{ $c->name }}</div>
+      </a>
+    @endforeach
+  </div>
+
+  <div class="flex items-center justify-between mb-3">
     <h2 class="font-bold">عقاريين قريبين منك</h2>
     <a href="{{ route('web.sellers.index') }}" class="text-primary">مشاهدة الكل</a>
   </div>

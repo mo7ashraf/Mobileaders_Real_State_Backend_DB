@@ -11,7 +11,7 @@ class ListingsByCityChart extends ApexChartWidget
 
     protected function getOptions(): array
     {
-        $rows = DB::table('Listing')
+        $rows = DB::table('listing')
             ->select('city', DB::raw('COUNT(*) as cnt'))
             ->groupBy('city')
             ->orderByDesc('cnt')
@@ -31,4 +31,3 @@ class ListingsByCityChart extends ApexChartWidget
         ];
     }
 }
-

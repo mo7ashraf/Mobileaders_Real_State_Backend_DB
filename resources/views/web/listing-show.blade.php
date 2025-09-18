@@ -27,7 +27,7 @@
     <div class="bg-white rounded-2xl overflow-hidden shadow mb-6">
       <div class="p-4">
         <h2 class="font-bold mb-3">الموقع على الخريطة</h2>
-        <div class="w-full" style="aspect-ratio: 16 / 9;">
+        <div id="map" class="w-full" style="aspect-ratio: 16 / 9;">
           <iframe
             width="100%"
             height="100%"

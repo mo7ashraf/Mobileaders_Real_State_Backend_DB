@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         // Table name is singular and capitalized in this project: 'Listing'
-        Schema::table('Listing', function (Blueprint $table) {
+        Schema::table('listing', function (Blueprint $table) {
             // Use sufficient precision for GPS coordinates. Make them nullable.
             if (!Schema::hasColumn('Listing', 'latitude')) {
                 $table->decimal('latitude', 10, 7)->nullable()->after('address');
@@ -22,7 +22,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('Listing', function (Blueprint $table) {
+        Schema::table('listing', function (Blueprint $table) {
             if (Schema::hasColumn('Listing', 'latitude')) {
                 $table->dropColumn('latitude');
             }
@@ -32,4 +32,3 @@ return new class extends Migration
         });
     }
 };
-
