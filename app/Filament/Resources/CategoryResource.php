@@ -41,7 +41,7 @@ class CategoryResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('slug')->label('Slug')->searchable(),
                 Tables\Columns\TextColumn::make('name')->label('Name')->searchable(),
-                Tables\Columns\TextColumn::make('icon')->label('Icon')->toggleable(isToggledHidden: true),
+                Tables\Columns\TextColumn::make('icon')->label('Icon')->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('sortOrder')->label('Order')->sortable(),
                 Tables\Columns\IconColumn::make('enabled')->label('Enabled')->boolean(),
             ])
@@ -63,4 +63,5 @@ class CategoryResource extends Resource
         ];
     }
 }
+
 

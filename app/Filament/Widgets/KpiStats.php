@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\PropertyRequest;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Illuminate\Support\Facades\Schema;
 
 class KpiStats extends BaseWidget
 {
@@ -14,8 +15,8 @@ class KpiStats extends BaseWidget
     {
         $listingsAll = Listing::count();
         $listings7d  = Listing::where('createdAt', '>=', now()->subDays(7))->count();
-        $ordersOpen  = Order::where('status', 'open')->count();
-        $requestsOpen = PropertyRequest::where('status', 'open')->count();
+        $ordersOpen  = (Schema::hasTable('order') ? Order::where('status','open')->count() : 0);
+        $requestsOpen = (Schema::hasTable('propertyrequest') ? PropertyRequest::where('status','open')->count() : 0);
 
         return [
             Stat::make('كل الإعلانات', number_format($listingsAll))
@@ -28,4 +29,9 @@ class KpiStats extends BaseWidget
         ];
     }
 }
+
+
+
+
+
 

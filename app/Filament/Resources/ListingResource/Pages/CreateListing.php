@@ -6,6 +6,7 @@ use App\Filament\Resources\ListingResource;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class CreateListing extends CreateRecord
 {
@@ -14,6 +15,9 @@ class CreateListing extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['id'] = $data['id'] ?? (string) Str::uuid();
+        if (!Auth::guard('admin')->check() && Auth::guard('web')->check()) {
+            $data['sellerId'] = (string) Auth::guard('web')->id();
+        }
         return $data;
     }
 
@@ -27,4 +31,3 @@ class CreateListing extends CreateRecord
         return 'إضافة';
     }
 }
-
