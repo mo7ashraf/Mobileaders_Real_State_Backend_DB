@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -80,4 +79,27 @@ Route::prefix('auth')->group(function () {
         Route::get('/me', [AuthController::class, 'me']);
         Route::post('/logout', [AuthController::class, 'logout']);
     });
+});
+Route::get('/conversations-debug', function () {
+    try {
+        // Quick metadata check
+        $tables = array_map('current', DB::select('SHOW TABLES'));
+        $has = fn($t) => in_array($t, $tables);
+
+        // Try to fetch a user from the *correct* table name (PascalCase!)
+        $me = DB::table('user')->orderBy('createdAt','asc')->first();
+
+        return response()->json([
+            'ok'      => true,
+            'tables'  => [
+                'user' => $has('user'),
+                'conversation' => $has('conversation'),
+                'conversationparticipant' => $has('conversationparticipant'),
+                'message' => $has('message'),
+            ],
+            'me'      => $me ? ['id'=>$me->id, 'name'=>$me->name] : null,
+        ]);
+    } catch (\Throwable $e) {
+        return response()->json(['ok'=>false, 'error'=>$e->getMessage()], 500);
+    }
 });
