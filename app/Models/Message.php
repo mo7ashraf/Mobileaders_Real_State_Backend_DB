@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    protected $table = 'Message';
+    protected $table = 'message';
     public $timestamps = false;
     protected $fillable = ['id','conversationId','senderId','body','createdAt','readAt'];
     public $incrementing = false;

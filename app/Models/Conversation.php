@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Conversation extends Model
 {
-    protected $table = 'Conversation';
+    protected $table = 'conversation';
     public $timestamps = false;
     protected $fillable = ['id','title','createdAt'];
     public $incrementing = false;
