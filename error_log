@@ -1,0 +1,6 @@
+[13-Sep-2025 22:05:18 UTC] PHP Fatal error:  Cannot use Illuminate\Http\Request as Request because the name is already in use in /home/metatry/public_html/routes/web.php on line 64
+[13-Sep-2025 22:05:46 UTC] PHP Fatal error:  Cannot use Illuminate\Http\Request as Request because the name is already in use in /home/metatry/public_html/routes/web.php on line 64
+[13-Sep-2025 22:05:54 UTC] PHP Fatal error:  Cannot use Illuminate\Http\Request as Request because the name is already in use in /home/metatry/public_html/routes/web.php on line 64
+[13-Sep-2025 22:06:10 UTC] PHP Fatal error:  Cannot use Illuminate\Http\Request as Request because the name is already in use in /home/metatry/public_html/routes/web.php on line 64
+[13-Sep-2025 22:06:22 UTC] PHP Fatal error:  Cannot use Illuminate\Http\Request as Request because the name is already in use in /home/metatry/public_html/routes/web.php on line 64
+[13-Sep-2025 22:06:48 UTC] PHP Fatal error:  Cannot use Illuminate\Http\Request as Request because the name is already in use in /home/metatry/public_html/routes/web.php on line 64

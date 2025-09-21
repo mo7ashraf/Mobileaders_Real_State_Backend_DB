@@ -1,0 +1,38 @@
+DirectoryIndex index.php public/index.php index.html
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  
+RewriteCond %{HTTP_HOST} ^www\.metatry\.online$ [NC]
+RewriteRule ^(.*)$ https://metatry.online/$1 [L,R=301]
+
+  # Livewire DYNAMIC endpoints -> Laravel (NO rewrite to /public)
+  RewriteCond %{REQUEST_URI} ^/(livewire|xw)/(message|update) [NC]
+  RewriteRule ^ index.php [L]
+
+  # Static assets under /public (filament/vendor/build/…)
+  RewriteCond %{REQUEST_URI} ^/(build|vendor|filament|storage|assets|css|js|fonts|images|favicon\.ico|robots\.txt) [NC]
+  RewriteRule ^ public%{REQUEST_URI} [L]
+
+  # Livewire static JS
+  RewriteCond %{REQUEST_URI} ^/(livewire|xw)/.*\.(js|map)$ [NC]
+  RewriteRule ^ public%{REQUEST_URI} [L]
+
+  # Everything else -> Laravel
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.php [L]
+</IfModule>
+
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php82 .php .php8 .phtml
+</IfModule>
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php82” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php82 .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
