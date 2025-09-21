@@ -4,6 +4,9 @@
     </IfModule>
 
     RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.metatry\.online$ [NC]
+RewriteRule ^(.*)$ https://metatry.online/$1 [L,R=301]
+
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
