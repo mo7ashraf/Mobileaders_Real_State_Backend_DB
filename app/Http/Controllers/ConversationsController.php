@@ -35,19 +35,12 @@ class ConversationsController extends Controller
     // GET /api/conversations
     public function index()
     {
-        /*$me = $this->currentUser();
-
-        $convs = Conversation::query()
-            ->select('Conversation.id','Conversation.title','Conversation.createdAt')
-            ->join('ConversationParticipant as cp','cp.conversationId','=','Conversation.id')
-            ->where('cp.userId',$me->id)
-            ->orderByDesc('Conversation.createdAt')*/
-            $me = $this->currentUser();
-        $conv = (new Conversation)->getTable();                 // "conversation"
+        $me = $this->currentUser();
+       $conv = (new Conversation)->getTable();                 // "conversation"
         $cp   = (new ConversationParticipant)->getTable();      // "conversationparticipant"
 
-        $convs = Conversation::query()
-            ->select("$conv.id","$conv.title","$conv.createdAt")
+       $convs = Conversation::query()
+           ->select("$conv.id","$conv.title","$conv.createdAt")
             ->join("$cp as cp",'cp.conversationId',"=","$conv.id")
             ->where('cp.userId',$me->id)
             ->orderByDesc("$conv.createdAt")
