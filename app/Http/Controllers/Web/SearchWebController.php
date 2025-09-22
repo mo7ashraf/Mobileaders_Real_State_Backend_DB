@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Listing;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class SearchWebController extends Controller
@@ -36,11 +37,12 @@ class SearchWebController extends Controller
         else                             $q->orderBy('createdAt', 'desc');
 
         $listings = $q->paginate(24)->withQueryString();
+        $categories = Category::where('enabled', true)->orderBy('sortOrder')->orderBy('name')->get();
 
         return view('web.search', [
-            'listings' => $listings,
-            'filters'  => $r->all(),
+            'listings'   => $listings,
+            'filters'    => $r->all(),
+            'categories' => $categories,
         ]);
     }
 }
-

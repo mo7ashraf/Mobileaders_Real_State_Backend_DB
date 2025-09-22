@@ -2,6 +2,21 @@
 @section('title','بحث')
 
 @section('content')
+  <div class="bg-white rounded-2xl shadow p-4 mb-4">
+    <div class="flex items-center gap-3 overflow-x-auto">
+      <a href="{{ route('web.search', array_filter(['status'=>$filters['status'] ?? null])) }}" class="px-3 py-1 rounded-full border {{ empty($filters['category']) ? 'bg-primary text-white border-primary' : '' }}">All</a>
+      @foreach(($categories ?? []) as $c)
+        <a href="{{ route('web.search', array_filter(['category'=>$c->slug,'status'=>$filters['status'] ?? null])) }}"
+           class="px-3 py-1 rounded-full border {{ ($filters['category'] ?? null)===$c->slug ? 'bg-primary text-white border-primary' : '' }}">{{ $c->name }}</a>
+      @endforeach
+      <div class="ml-auto flex items-center gap-2">
+        <span class="text-sm text-gray700">Status:</span>
+        <a href="{{ route('web.search', array_filter(['category'=>$filters['category'] ?? null])) }}" class="px-2 py-1 rounded-full border {{ empty($filters['status']) ? 'bg-primary text-white border-primary' : '' }}">All</a>
+        <a href="{{ route('web.search', array_filter(['category'=>$filters['category'] ?? null,'status'=>'rent'])) }}" class="px-2 py-1 rounded-full border {{ ($filters['status'] ?? null)==='rent' ? 'bg-primary text-white border-primary' : '' }}">Rent</a>
+        <a href="{{ route('web.search', array_filter(['category'=>$filters['category'] ?? null,'status'=>'sell'])) }}" class="px-2 py-1 rounded-full border {{ ($filters['status'] ?? null)==='sell' ? 'bg-primary text-white border-primary' : '' }}">Sell</a>
+      </div>
+    </div>
+  </div>
   <form method="get" class="bg-white rounded-2xl shadow p-4 mb-4 grid md:grid-cols-6 gap-3">
     <input type="text" name="q" value="{{ $filters['q'] ?? '' }}" placeholder="ابحث بالعنوان أو العنوان التفصيلي"
            class="md:col-span-2 border rounded-xl px-3 py-2">
@@ -39,4 +54,3 @@
     {{ $listings->links() }}
   </div>
 @endsection
-

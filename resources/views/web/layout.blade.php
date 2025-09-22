@@ -44,10 +44,12 @@
             @csrf
             <button class="hover:text-primary">خروج</button>
           </form>
+          <a class="hover:text-primary" href="{{ route('web.chat.index') }}">Chat</a>
         @else
           <a class="hover:text-primary" href="{{ route('login') }}">تسجيل الدخول</a>
           <a class="hover:text-primary" href="{{ route('web.register') }}">إنشاء حساب</a>
         @endauth
+        <a class="hover:text-primary" href="{{ route('web.map') }}">Map</a>
       </nav>
     </div>
   </header>

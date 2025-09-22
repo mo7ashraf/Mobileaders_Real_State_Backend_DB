@@ -48,10 +48,15 @@ Route::match(['post','patch'],'/support/settings', [SupportController::class, 's
 Route::get('/policies/{slug}', [PolicyController::class, 'get']);
 
 
-Route::get('/conversations', [ConversationsController::class, 'index']);
+/*Route::get('/conversations', [ConversationsController::class, 'index']);
 Route::post('/conversations',                [ConversationsController::class,'store']);
 Route::get('/conversations/{id}/messages',   [ConversationsController::class,'messages']);
 Route::post('/conversations/{id}/messages',  [ConversationsController::class,'send']);
+*/
+Route::get('/conversations', [ConversationsController::class, 'index']);
+Route::post('/conversations', [ConversationsController::class, 'store']);
+Route::get('/conversations/{id}/messages', [ConversationsController::class, 'messages']);
+Route::post('/conversations/{id}/messages', [ConversationsController::class, 'send']);
 
 Route::get('/notifications', [NotificationController::class, 'index']);
 Route::post('/notifications/{id}/star', [NotificationController::class, 'star']);

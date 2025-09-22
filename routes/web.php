@@ -9,6 +9,8 @@ use App\Http\Controllers\Web\PageWebController;
 use App\Http\Controllers\Web\AuthWebController;
 use App\Http\Controllers\Web\ProfileWebController;
 use App\Http\Controllers\Web\AdsWebController;
+use App\Http\Controllers\Web\ChatWebController;
+use App\Http\Controllers\Web\MapWebController;
 use App\Http\Controllers\PolicyImportController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
@@ -30,6 +32,8 @@ Route::get('/tools/import-policies', [PolicyImportController::class, 'run'])->na
 
 
 Route::get('/support',          [PageWebController::class, 'support'])->name('web.support');
+// Map view of nearby listings
+Route::get('/map',              [MapWebController::class, 'index'])->name('web.map');
 
 // Simple health page
 Route::get('/ping', fn() => view('web.ping'));
@@ -52,6 +56,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/ads',           [AdsWebController::class, 'store'])->name('web.ads.store');
     Route::get('/account/listings',[AdsWebController::class, 'mine'])->name('web.ads.mine');
     Route::post('/ads/{id}/delete',[AdsWebController::class, 'destroy'])->name('web.ads.delete');
+
+    // Chat
+    Route::get('/chat',                  [ChatWebController::class, 'index'])->name('web.chat.index');
+    Route::get('/chat/{id}',             [ChatWebController::class, 'show'])->name('web.chat.show');
+    Route::post('/chat/{id}/send',       [ChatWebController::class, 'send'])->name('web.chat.send');
+    Route::post('/chat/new',             [ChatWebController::class, 'store'])->name('web.chat.store');
 });
 // temporary “flush” route to clear cached routes/config/views if needed
 Route::get('/__flush', function () {

@@ -10,6 +10,20 @@
     <a href="{{ route('web.search') }}" class="px-4 py-2 bg-primary text-white rounded-xl">إرسال طلب</a>
   </div>
 
+  <div class="bg-white rounded-2xl shadow p-4 mb-4">
+    <div class="flex items-center gap-3 overflow-x-auto">
+      <a href="{{ route('web.home', array_filter(['status'=>$filters['status'] ?? null])) }}" class="px-3 py-1 rounded-full border {{ empty($filters['category']) ? 'bg-primary text-white border-primary' : '' }}">All</a>
+      @foreach(($categories ?? []) as $c)
+        <a href="{{ route('web.home', array_filter(['category'=>$c->slug,'status'=>$filters['status'] ?? null])) }}" class="px-3 py-1 rounded-full border {{ ($filters['category'] ?? null)===$c->slug ? 'bg-primary text-white border-primary' : '' }}">{{ $c->name }}</a>
+      @endforeach
+    </div>
+    <div class="mt-3 flex items-center gap-2">
+      <a href="{{ route('web.home', array_filter(['category'=>$filters['category'] ?? null])) }}" class="px-3 py-1 rounded-full border {{ empty($filters['status']) ? 'bg-primary text-white border-primary' : '' }}">All</a>
+      <a href="{{ route('web.home', array_filter(['category'=>$filters['category'] ?? null,'status'=>'rent'])) }}" class="px-3 py-1 rounded-full border {{ ($filters['status'] ?? null)==='rent' ? 'bg-primary text-white border-primary' : '' }}">Rent</a>
+      <a href="{{ route('web.home', array_filter(['category'=>$filters['category'] ?? null,'status'=>'sell'])) }}" class="px-3 py-1 rounded-full border {{ ($filters['status'] ?? null)==='sell' ? 'bg-primary text-white border-primary' : '' }}">Sell</a>
+    </div>
+  </div>
+
   <div class="flex items-center justify-between mb-3">
     <h2 class="font-bold">الإعلانات الأكثر تفاعلاً</h2>
     <a href="{{ route('web.search') }}" class="text-primary">مشاهدة الكل</a>
